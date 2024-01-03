@@ -8,6 +8,7 @@ class Solution:
         if count < k:
             return head
         prev, curr = None, head
+        # reverse first k group
         for _ in range(k):
             temp, prev, curr = prev, curr, curr.next
             prev.next = temp
