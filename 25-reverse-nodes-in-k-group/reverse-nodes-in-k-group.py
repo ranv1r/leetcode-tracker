@@ -12,5 +12,6 @@ class Solution:
         for _ in range(k):
             temp, prev, curr = prev, curr, curr.next
             prev.next = temp
+        # recursively reverse rest of valid k group
         head.next = self.reverseKGroup(curr, k)
         return prev
