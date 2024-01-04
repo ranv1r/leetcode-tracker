@@ -6,13 +6,19 @@
 #         self.right = right
 class Solution:
     def isBalanced(self, root: Optional[TreeNode]) -> bool:
-        self.bal = True
-        def dfs(node):
-            if not node: return 0
-            ld = dfs(node.left) # left-depth
-            rd = dfs(node.right) # right-depth
-            self.bal = self.bal and abs(rd - ld) <= 1
-            return 1 + max(ld, rd)
-        
-        dfs(root)
-        return self.bal
+        stack = [(root, False)] # node, visited
+        depths = {}
+        bal = True
+        while stack:
+            node, visited = stack.pop()
+            if not node:
+                continue
+            if not visited:
+                stack.extend([(node, True), (node.left, False), (node.right, False)])
+            if node:
+                ld, rd = depths.get(node.left, 0), depths.get(node.right, 0)
+                bal &= abs(ld - rd) <= 1
+                depths[node] = 1 + max(ld, rd)
+        return bal
+
+
