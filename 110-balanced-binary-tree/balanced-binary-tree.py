@@ -8,7 +8,6 @@ class Solution:
     def isBalanced(self, root: Optional[TreeNode]) -> bool:
         stack = [(root, False)] # node, visited
         depths = {}
-        bal = True
         while stack:
             node, visited = stack.pop()
             if not node:
@@ -17,8 +16,9 @@ class Solution:
                 stack.extend([(node, True), (node.left, False), (node.right, False)])
             if node:
                 ld, rd = depths.get(node.left, 0), depths.get(node.right, 0)
-                bal &= abs(ld - rd) <= 1
+                if abs(ld - rd) > 1:
+                    return False
                 depths[node] = 1 + max(ld, rd)
-        return bal
+        return True
 
 
