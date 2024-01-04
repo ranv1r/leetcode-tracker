@@ -12,7 +12,11 @@ class Solution:
             node, curr_depth = nodes.pop()
             if not node:
                 continue
-            nodes.extend([(node.left, curr_depth + 1), (node.right, curr_depth + 1)])
+                
+            child_depth = curr_depth + 1
+            nodes.append((node.left, child_depth))
+            nodes.append((node.right, child_depth))
+
             max_depth = max(max_depth, curr_depth)
         return max_depth
 
