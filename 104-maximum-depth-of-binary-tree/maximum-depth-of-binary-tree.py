@@ -6,7 +6,13 @@
 #         self.right = right
 class Solution:
     def maxDepth(self, root: Optional[TreeNode]) -> int:
-        if not root:
-            return 0
-        return 1 + max(self.maxDepth(root.left), self.maxDepth(root.right))
-        
+        nodes = [(root, 1)]
+        max_depth = 0
+        while nodes:
+            node, curr_depth = nodes.pop()
+            if not node:
+                continue
+            nodes.extend([(node.left, curr_depth + 1), (node.right, curr_depth + 1)])
+            max_depth = max(max_depth, curr_depth)
+        return max_depth
+
