@@ -13,9 +13,14 @@ class Solution:
             left_min, left_max, left_valid = dfs(n.left)
             right_min, right_max, right_valid = dfs(n.right)
 
-            valid = left_max < n.val < right_min
+            if not left_valid or not right_valid:
+                return None, None, False
 
-            return min(left_min, right_min, n.val), max(left_max, right_max, n.val), valid and left_valid and right_valid
+            return (
+                min(left_min, right_min, n.val),
+                max(left_max, right_max, n.val),
+                left_max < n.val < right_min
+            )
 
         return dfs(root)[2]
         
