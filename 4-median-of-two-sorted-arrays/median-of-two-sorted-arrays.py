@@ -1,28 +1,28 @@
 class Solution:
     def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:
-        # binary searching the partition on the smaller array
-        small, large = (nums1, nums2) if len(nums1) <= len(nums2) else (nums2, nums1)
-        m, n = len(small), len(large)
-        half = (m + n) // 2
-        left, right = 0, m
+        A, B = (nums1, nums2) if len(nums1) <= len(nums2) else (nums2, nums1)
+        m, n = len(A), len(B)
+        l, r = 0, m - 1
+        total = m + n
+        half = total // 2
 
         while True:
-            mid_small = left + ((right - left) // 2)
-            mid_large = half - mid_small
+            m1 = (l + r) // 2
+            m2 = half - (m1 + 1) - 1
 
-            small_partition_left = small[mid_small - 1] if mid_small - 1 >= 0 else float('-inf')
-            large_partition_left = large[mid_large - 1] if mid_large - 1 >= 0 else float('-inf')
-            small_partition_right = small[mid_small] if mid_small < len(small) else float('inf')
-            large_partition_right = large[mid_large] if mid_large < len(large) else float('inf')
+            leftA = A[m1] if m1 > -1 else float('-inf')
+            leftB = B[m2] if m2 > -1 else float('-inf')
+            rightA = A[m1 + 1] if m1 < m - 1 else float('inf')
+            rightB = B[m2 + 1] if m2 < n - 1 else float('inf')
 
-            if small_partition_left <= large_partition_right and large_partition_left <= small_partition_right:
-                if ((m + n) % 2) == 0:
-                    median_left = max(small_partition_left, large_partition_left)
-                    median_right = min(small_partition_right, large_partition_right)
-                    return (median_left + median_right) / 2
+            if leftA <= rightB and leftB <= rightA:
+                if total % 2 == 1:
+                    return min(rightA, rightB)
                 else:
-                    return min(small_partition_right, large_partition_right)
-            elif small_partition_left > large_partition_right:
-                right = mid_small - 1
+                    minRight = min(rightA, rightB)
+                    maxLeft = max(leftA, leftB)
+                    return (minRight + maxLeft) / 2
+            elif leftA > rightB:
+                r = m1 - 1
             else:
-                left = mid_small + 1
+                l = m1 + 1 
