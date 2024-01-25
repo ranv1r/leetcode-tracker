@@ -7,9 +7,6 @@ class Solution:
     def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
         if len(lists) == 0:
             return None
-        return self.mergeLists(lists)
-
-    def mergeLists(self, lists):
         if len(lists) == 1:
             return lists[0]
         if len(lists) == 2:
@@ -18,8 +15,8 @@ class Solution:
         leftHalf, rightHalf = lists[:half], lists[half:]
 
         return self.mergeTwoLists(
-            self.mergeLists(leftHalf), 
-            self.mergeLists(rightHalf)
+            self.mergeKLists(leftHalf), 
+            self.mergeKLists(rightHalf)
         )
         
 
