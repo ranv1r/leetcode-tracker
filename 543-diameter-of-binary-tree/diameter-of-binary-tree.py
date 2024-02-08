@@ -22,12 +22,12 @@ class Solution:
             longest_arm = 1 + max(left_longest_arm, right_longest_arm)
             
             # Calculate the diameter for the current node.
-            diameter = max(1 + left_longest_arm + right_longest_arm, left_diameter, right_diameter)
+            diameter = max(left_longest_arm + right_longest_arm, left_diameter, right_diameter)
             
             # Return the calculated diameter and longest arm for the current node.
             return diameter, longest_arm
         
         # The result of the depth function is a tuple, and we are interested in the diameter (index 0).
         # Subtracting 1 to get the actual number of edges in the diameter.
-        return depth(root)[0] - 1
+        return depth(root)[0]
 
