@@ -10,16 +10,24 @@ class Solution:
         """
         slow, fast = head, head
         while fast.next and fast.next.next:
-            slow, fast = slow.next, fast.next.next
-        half, slow, fast = slow, None, slow.next
-        half.next = None
-        while fast:
-            temp, slow, fast = slow, fast, fast.next
-            slow.next = temp
-        a, b = head, slow
-        while a and b:
-            temp1, temp2 = a.next, b.next
-            a.next = b
-            b.next = temp1
-            a, b = temp1, temp2
-        return head
+            slow = slow.next
+            fast = fast.next.next
+
+
+        prev, curr = None, slow.next
+        
+        while curr:
+            temp, prev, curr = prev, curr, curr.next
+            prev.next = temp
+
+        slow.next = None
+        currA, currB = head, prev
+        while currA and currB:
+            tempA, tempB = currA, currB
+            currA, currB = currA.next, currB.next
+            tempA.next = tempB
+            tempB.next = currA
+
+
+
+        
